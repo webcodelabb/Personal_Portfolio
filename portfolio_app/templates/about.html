@@ -1,0 +1,46 @@
+<!-- About Section -->
+<style>
+  .section-heading {
+    font-size: 3.5rem; /* Adjust the size as needed */
+  }
+
+</style>
+
+<section id="about" class="about section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2 class="section-heading">{{ about.title }}</h2>
+    <p>{{ about.description }}</p>
+  </div><!-- End Section Title -->
+
+  <div class="container">
+
+    <div class="row gy-4">
+
+      <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+        <p>
+          {{ about.additional_info }}
+        </p>
+        <ul>
+          {% if about.point_1 %}<li><i class="bi bi-check2-circle"></i> <span>{{ about.point_1 }}</span></li>{% endif %}
+          {% if about.point_2 %}<li><i class="bi bi-check2-circle"></i> <span>{{ about.point_2 }}</span></li>{% endif %}
+          {% if about.point_3 %}<li><i class="bi bi-check2-circle"></i> <span>{{ about.point_3 }}</span></li>{% endif %}
+        </ul>
+      </div>
+
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+        <p>{{ about.additional_info }}</p>
+        {% if about.read_more_link %}
+        <a href="{{ about.read_more_link }}" class="read-more">
+          <span>Read More</span><i class="bi bi-arrow-right"></i>
+        </a>
+        {% endif %}
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<!-- /About Section -->

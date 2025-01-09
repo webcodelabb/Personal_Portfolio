@@ -1,0 +1,18 @@
+{% load static %}
+<section id="call-to-action" class="call-to-action section dark-background">
+    <img src="{% static 'assets/img/cta-bg.jpg' %}" loading="lazy" alt="">
+    <div class="container">
+      <div class="row" data-aos="zoom-in" data-aos-delay="100">
+        <div class="col-xl-9 text-center text-xl-start">
+          <h3>{{ call_to_action.title|safe }}</h3>
+          <p>{{ call_to_action.description|safe }}</p>
+        </div>
+        <div class="col-xl-3 cta-btn-container text-center">
+          <a class="cta-btn align-middle" href="{% url 'track_click' call_to_action.id %}">{{ call_to_action.button_text }}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  

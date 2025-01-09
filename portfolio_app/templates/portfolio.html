@@ -1,0 +1,56 @@
+<style>
+  .portfolio-item img {
+    width: 100%; /* Ensures images take the full width of their container */
+    height: auto; /* Maintains aspect ratio */
+    object-fit: cover; /* Crops the image to fit within the container without distortion */
+    border-radius: 5px; /* Optional: Add rounded corners */
+}
+.portfolio-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Ensures all items take up equal height */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow */
+    padding: 15px;
+    background: #fff; /* Optional: Add a background color */
+    border-radius: 8px; /* Optional: Rounded corners */
+    overflow: hidden; /* Ensures content doesn’t overflow */
+}
+
+
+</style>
+{{ faq.question }}
+  <section id="portfolio" class="portfolio section">
+   
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Portfolio</h2>
+        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+    </div>
+
+    <div class="container">
+      <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+        {% for project in projects %}
+        <div class="col-lg-4 col-md-6 portfolio-item">
+            <img src="{{ project.image.url }}" class="img-fluid" loading="lazy" alt="{{ project.title }}">
+            <div class="portfolio-info">
+                <h4>{{ project.title }}</h4>
+                <p>{{ project.description }}</p>
+                <p><strong>Technologies:</strong> {{ project.technologies }}</p>
+                <div class="portfolio-links">
+                    {% if project.github_link %}
+                    <a href="{{ project.github_link }}" target="_blank" class="btn btn-primary">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
+                    {% endif %}
+                    {% if project.demo_link %}
+                    <a href="{{ project.demo_link }}" target="_blank" class="btn btn-success" style="color: #2b4257;">
+                        <i class="bi bi-box-arrow-up-right" ></i> Demo
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+</section>

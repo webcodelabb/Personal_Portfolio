@@ -1,0 +1,118 @@
+{% load static %}
+{% load cache %}
+{% cache 500 recent_blogs %}
+
+
+<main class="main">
+  
+    <!-- Hero Section -->
+    <!-- Hero Section -->
+<section id="hero" class="hero section dark-background">
+    <img src="{% static 'assets/img/landing.jpeg' %}" loading="lazy" alt="" data-aos="fade-in">
+  
+    <div class="container d-flex flex-column align-items-center text-center">
+      <h2 data-aos="fade-up" data-aos-delay="100">Crafting Code, Designing Futures</h2>
+      <p id="typewriter" data-aos="fade-up" data-aos-delay="200"></p>
+      <div data-aos="fade-up" data-aos-delay="300">
+        <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
+      </div>
+    </div>
+  </section><!-- /Hero Section -->
+  
+  <script>
+    // JavaScript for Typewriter Effect
+    const messages = [
+      "Crafting responsive web designs tailored to your needs.",
+      "Developing dynamic web applications with modern technologies.",
+      "Transforming ideas into exceptional digital experiences.",
+      "Your vision, our code😊."
+    ];
+    const typewriterElement = document.getElementById("typewriter");
+    const typingSpeed = 30; // Typing speed in ms
+    const deletingSpeed = 47; // Deleting speed in ms
+    const pauseBetween = 1200; // Pause before next message in ms
+  
+    let messageIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+  
+    function typeEffect() {
+      const currentMessage = messages[messageIndex];
+  
+      if (isDeleting) {
+        charIndex--;
+      } else {
+        charIndex++;
+      }
+  
+      typewriterElement.textContent = currentMessage.substring(0, charIndex);
+  
+      if (!isDeleting && charIndex === currentMessage.length) {
+        // Pause at the end of the message
+        setTimeout(() => (isDeleting = true), pauseBetween);
+      } else if (isDeleting && charIndex === 0) {
+        // Move to the next message
+        isDeleting = false;
+        messageIndex = (messageIndex + 1) % messages.length;
+      }
+  
+      const speed = isDeleting ? deletingSpeed : typingSpeed;
+      setTimeout(typeEffect, speed);
+    }
+  
+    // Start the effect
+    document.addEventListener("DOMContentLoaded", typeEffect);
+  </script>
+  
+
+      <!-- About Section -->
+      {% include 'about.html'%}
+      <!-- /About Section -->
+  
+
+      <!-- Services Section -->
+      {% include 'service.html' %}
+      <!-- /Services Section -->
+
+
+
+      <!-- Call To Action Section -->
+      {% include 'cta.html' %}
+      <!-- /Call To Action Section -->
+
+
+
+    <!-- Features Section -->
+    {% include 'features.html' %}
+    <!-- /Features Section -->
+
+
+    <!-- Testimonials Section -->
+    {% include 'testimonials.html' %}
+    <!-- /Testimonials Section -->
+
+
+    <!-- Skills Section -->
+     {% include 'skills.html' %}
+    <!-- /Skills Section -->
+
+    
+    <!-- Portfolio Section -->
+    {% include 'portfolio.html' %}
+    <!-- Portfolio Section -->
+
+    
+    <!-- Faq Section -->
+    {% include 'faq.html' %}  
+    <!-- /Faq Section -->
+
+    <!-- Recent Posts Section -->
+    <!-- {% include 'recent_blog.html' %} -->
+    <!-- /Recent Posts Section -->
+
+    <!-- Contact Section -->
+    {% include 'contact.html' %}
+    <!-- /Contact Section -->
+
+  </main>  
+{% endcache %}

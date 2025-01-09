@@ -1,0 +1,151 @@
+<style>
+  .testimonials .testimonial-item {
+  background-color: var(--surface-color);
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Add border wrapping */
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px;
+  margin: 15px;
+  text-align: center; /* Center-align content */
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonials .testimonial-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15); /* Highlight on hover */
+}
+
+.testimonials .testimonial-item .testimonial-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%; /* Circular shape */
+  object-fit: cover;
+  margin: 0 auto 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.testimonials .testimonial-item .stars i {
+  color: #ffc107;
+  font-size: 18px;
+}
+
+.testimonials .testimonial-item .quote-icon-left,
+.testimonials .testimonial-item .quote-icon-right {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 26px;
+  line-height: 0;
+}
+
+.testimonials .testimonial-item .quote-icon-left {
+  display: inline-block;
+  left: -5px;
+  position: relative;
+}
+
+.testimonials .testimonial-item .quote-icon-right {
+  display: inline-block;
+  right: -5px;
+  position: relative;
+  transform: rotateY(180deg); /* Flip to face the correct direction */
+}
+
+.testimonials .testimonial-item p {
+  font-style: italic;
+  margin: 15px auto;
+}
+
+.testimonials .swiper-wrapper {
+  height: auto;
+}
+
+.testimonials .swiper-pagination {
+  margin-top: 20px;
+  position: relative;
+}
+
+.testimonials .swiper-pagination .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 1;
+}
+
+.testimonials .swiper-pagination .swiper-pagination-bullet-active {
+  background-color: var(--accent-color);
+}
+
+</style>
+
+<section id="testimonials" class="testimonials section">
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Testimonials</h2>
+    <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+  </div><!-- End Section Title -->
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="swiper init-swiper">
+      <script type="application/json" class="swiper-config">
+        {
+          "loop": true,
+          "speed": 600,
+          "autoplay": { "delay": 5000 },
+          "slidesPerView": "auto",
+          "pagination": {
+            "el": ".swiper-pagination",
+            "type": "bullets",
+            "clickable": true
+          },
+          "breakpoints": {
+            "320": { "slidesPerView": 1, "spaceBetween": 40 },
+            "1200": { "slidesPerView": 3, "spaceBetween": 10 }
+          }
+        }
+      </script>
+      <div class="swiper-wrapper">
+        {% for testimonial in testimonials %}
+        <div class="swiper-slide">
+          <div class="testimonial-item">
+            <img src="{{ testimonial.image.url }}" loading="lazy" class="testimonial-img" alt="">
+            <h3>{{ testimonial.name }}</h3>
+            <h4>{{ testimonial.position }}</h4>
+            <div class="stars" data-rating="{{ testimonial.rating }}"></div>
+            <p>
+              <i class="bi bi-quote quote-icon-left"></i>
+              <span>{{ testimonial.description }}</span>
+              <i class="bi bi-quote quote-icon-right"></i>
+            </p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  const starContainers = document.querySelectorAll(".stars");
+
+  starContainers.forEach(container => {
+    const rating = parseInt(container.getAttribute("data-rating"), 10);
+    const filledStars = Math.min(rating, 5);
+    const emptyStars = 5 - filledStars;
+
+    for (let i = 0; i < filledStars; i++) {
+      const star = document.createElement("i");
+      star.className = "bi bi-star-fill";
+      container.appendChild(star);
+    }
+
+    for (let i = 0; i < emptyStars; i++) {
+      const star = document.createElement("i");
+      star.className = "bi bi-star";
+      container.appendChild(star);
+    }
+  });
+});
+
+</script>

@@ -1,0 +1,32 @@
+{% load static %}
+
+<section id="faq" class="faq section">
+    <div class="container-fluid">
+        <div class="row gy-4">
+            <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1">
+                <div class="content px-xl-5" data-aos="fade-up" data-aos-delay="100">
+                    <h3><span>Frequently Asked </span><strong>Questions</strong></h3>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    </p>
+                </div>
+                <div class="faq-container px-xl-5" data-aos="fade-up" data-aos-delay="200">
+                    {% for faq in faqs %}
+                    <div class="faq-item">
+                        <i class="faq-icon bi bi-question-circle"></i>
+                        <h3>{{ faq.question }}</h3>
+                        <div class="faq-content">
+                            <p>{{ faq.answer }}</p>
+                        </div>
+                        <i class="faq-toggle bi bi-chevron-right"></i>
+                    </div>
+                    
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-5 order-1 order-lg-2">
+                <img src="{% static 'assets/img/faqs.jpg' %}" loading="lazy" class="img-fluid" alt="" data-aos="zoom-in" data-aos-delay="100">
+            </div>
+        </div>
+    </div>
+</section>

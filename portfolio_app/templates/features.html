@@ -1,0 +1,37 @@
+{% load static %}
+<!-- Features Section -->
+<section id="features" class="features section">
+
+  <div class="container">
+
+    <div class="row gy-4">
+
+      <!-- Feature Image -->
+      <div class="features-image col-lg-6 order-lg-2" data-aos="fade-up" data-aos-delay="100">
+        {% if feature.image %}
+        <img src="{{ feature.image.url }}" loading="lazy" alt="Feature Image">
+        {% else %}
+        <img src="{% static 'assets/img/features.png' %}" loading="lazy" alt="Default Feature Image">
+        {% endif %}
+      </div>
+
+      <!-- Feature Details -->
+      <div class="col-lg-6 order-lg-1">
+        {% for feature in features %}
+          <div class="features-item d-flex ps-0 ps-lg-3 pt-4 pt-lg-0 {% if forloop.first %} mt-4 {% endif %}" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+            <i class="bi {{ feature.icon }} flex-shrink-0"></i>
+            <div>
+              <h4>{{ feature.title }}</h4>
+              <p>{{ feature.description }}</p>
+            </div>
+          </div><!-- End Features Item-->
+        {% endfor %}
+      </div>
+      
+      
+      
+    </div>
+
+  </div>
+
+</section><!-- /Features Section -->

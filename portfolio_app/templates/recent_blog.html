@@ -1,0 +1,65 @@
+{% load static %}
+<section id="recent-posts" class="recent-posts section">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Recent Blog Posts</h2>
+      <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+    </div>
+  
+    <div class="container">
+        <div id="recent-posts-container" class="row gy-4">
+          <!-- Blog posts will be dynamically added here -->
+        </div>
+  </section>
+  
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch('/api/recent-blogs/')  // Ensure this endpoint exists
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const container = document.getElementById('recent-posts-container');
+            container.innerHTML = ''; // Clear any placeholder content
+
+            if (data.length === 0) {
+                container.innerHTML = '<p>No recent posts available.</p>';
+                return;
+            }
+
+            data.forEach((post, index) => {
+                const postHTML = `
+                <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="${(index + 1) * 100}">
+                    <article>
+                        <div class="post-img">
+                            <img src="${post.image_url}" loading="lazy" alt="${post.title}" class="img-fluid">
+                        </div>
+                        <p class="post-category">${post.category}</p>
+                        <h2 class="title">
+                            <a href="${post.url}">${post.title}</a>
+                        </h2>
+                        <div class="d-flex align-items-center">
+                            <img src="${post.author_image}" alt="${post.author}" class="img-fluid post-author-img flex-shrink-0" loading="lazy">
+                            <div class="post-meta">
+                                <p class="post-author">${post.author}</p>
+                                <p class="post-date">
+                                    <time datetime="${post.published_date}">${post.published_date}</time>
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>`;
+                container.insertAdjacentHTML('beforeend', postHTML);
+            });
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+            const container = document.getElementById('recent-posts-container');
+            container.innerHTML = '<p>Error loading recent posts. Please try again later.</p>';
+        });
+});
+
+  </script>
+  <script src="{% static 'js/recent-blogs.js' %}"></script>

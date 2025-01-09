@@ -1,0 +1,168 @@
+<style>
+ .skill {
+    text-align: center;
+    position: relative;
+    width: 180px;
+    height: 180px;
+    background: #fff;
+    border-radius: 15px;
+    padding: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    margin: 10px; /* Adds space between skills */
+}
+
+.skill:hover {
+    transform: scale(1.05); /* Enlarges the box slightly */
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2); /* Emphasizes shadow */
+    background-color: #f9f9f9; /* Optional: Slight background change */
+}
+
+.skills .section-title {
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.skills .skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.skills .skill {
+  background-color: var(--surface-color);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+
+.skills .circle {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.skills .circle svg {
+  transform: rotate(-90deg);
+}
+
+.skills .circle .background {
+  stroke: #d9d9d9;
+  stroke-width: 15;
+}
+
+.skills .circle .progress {
+  stroke: #2b4257;
+  stroke-width: 15;
+  stroke-dasharray: 471; /* 2 * π * r (r = 75) */
+  stroke-dashoffset: 471;
+  transition: stroke-dashoffset 1s ease-out;
+}
+
+.skills .circle .skill-content {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.skills .circle .skill-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.skills .circle .skill-percent {
+  font-size: 18px;
+  font-weight: bold;
+  color: #2b4257;
+}
+
+.skills .skill.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+</style>
+
+<section id="skills" class="skills section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Skills</h2>
+      <p>Our expertise and proficiency in various technical domains.</p>
+    </div>
+    <div class="skills-container">
+      {% for skill in skills %}
+      <div class="skill" data-percent="{{ skill.percentage }}">
+        <div class="circle">
+          <svg width="170" height="170">
+            <circle class="background" cx="80" cy="80" r="65" fill="none"></circle>
+            <circle class="progress" cx="80" cy="80" r="65" fill="none"></circle>
+          </svg>
+          <div class="skill-content">
+            <div class="skill-title">{{ skill.name }}</div>
+            <div class="skill-percent">{{ skill.percentage }}%</div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+  
+  <script>
+  const skills = document.querySelectorAll('.skill');
+
+// Check if element is in viewport
+const isInViewport = (element) => {
+  const rect = element.getBoundingClientRect();
+  const threshold = window.innerHeight * 0.5; // Trigger when half visible
+  return rect.top <= window.innerHeight - threshold && rect.bottom >= threshold;
+};
+
+// Animate skill progress when in viewport
+const animateSkills = () => {
+  skills.forEach(skill => {
+    if (isInViewport(skill) && !skill.classList.contains('visible')) {
+      skill.classList.add('visible');
+      const percent = skill.getAttribute('data-percent');
+      const progress = skill.querySelector('.progress');
+
+      const radius = progress.getAttribute('r');
+      const circumference = 2 * Math.PI * radius;
+
+      progress.style.strokeDasharray = circumference;
+      progress.style.strokeDashoffset = circumference;
+
+      // Delay progress animation slightly for smoother effect
+      setTimeout(() => {
+        progress.style.strokeDashoffset = circumference - (percent / 100) * circumference;
+      }, 300);
+    }
+  });
+};
+
+// Event listeners
+window.addEventListener('scroll', animateSkills);
+window.addEventListener('load', animateSkills);
+window.addEventListener('resize', animateSkills); // Optional for responsiveness
+
+
+  </script>
+  
